@@ -21,15 +21,15 @@
         var video = $window.document.createElement('video');
         video.setAttribute('width', width);
         video.setAttribute('height', height);
+        angular.element(element).append(video);
         //video.setAttribute('style', '-moz-transform:rotateY(-180deg);-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg);');
         var canvas = $window.document.createElement('canvas');
         canvas.setAttribute('id', 'qr-canvas');
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
+        canvas.setAttribute('width', video.clientWidth);
+        canvas.setAttribute('height', video.clientHeight);
         canvas.setAttribute('style', 'display:none;');
-
-        angular.element(element).append(video);
         angular.element(element).append(canvas);
+
         var context = canvas.getContext('2d');
         var stopScan;
         var videoSelect;
@@ -69,7 +69,7 @@
             option.value = deviceInfo.deviceId;
             if (deviceInfo.kind === 'videoinput') {
               option.text = deviceInfo.label || 'Camera ' + (videoSelect.length + 1);
-              videoSelect.appendChild(option);
+              videoSelect.append(option);
             }
           }
 
@@ -77,7 +77,7 @@
             refreshStream();
           };
 
-          angular.element(element).append(videoSelect);
+          angular.element(element).prepend(videoSelect);
         };
 
         var refreshStream = function () {
